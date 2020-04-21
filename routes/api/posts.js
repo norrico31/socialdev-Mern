@@ -153,4 +153,76 @@ router.put('/unlike/:id', auth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+
+// @route    Post api/posts/comment/:id
+// @desc     Comment on a post
+// @access   Private
+router.post('/comment/:id', [ auth, [
+    check('text', 'Text is required').not().isEmpty()
+]], async (req, res) => {
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const user = await User.findById(req.user.id).select('-password'); // req.user.id is from auth that verified the token
+        const post = await Post.findById(req.params.id);
+
+        // Create an object
+        const newComment = {
+            user: req.user.id,
+            name: user.name,
+            avatar: user.avatar,
+            text: req.body.text      
+        };
+
+        post.comments.unshift(newComment);
+        await post.save();
+        res.json(post.comments);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+// @route    DELETE api/posts/comment/:id/:comment_id
+// @desc     Comment on a post
+// @access   Private
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+    try {
+
+        const post = await Post.findById(req.params.id);
+
+        // Pull out comment
+        const comment = post.comments.find(({ id }) => id === req.params.comment_id);
+
+        // Make sure comment exist
+        if (!comment) {
+            return res.status(404).json({ msg: 'Comment does not exist' });
+        }
+
+        // Check user
+        if (comment.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Unauthorized user' });
+        }
+
+        // Get remove index
+        const removeIndex = post.comments.map(({ user }) => user.toString()).indexOf(req.user.id);
+        post.comments.splice(removeIndex, 1);
+        // OR use filter
+        // post.comments = post.comments.filer(({ id }) => id !== req.params.comment_id);
+        
+        await post.save();
+        return res.json(post.posts);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
 module.exports = router;
