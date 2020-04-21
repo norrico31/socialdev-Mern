@@ -23,7 +23,7 @@ router.post('/', [ auth, [
     try {
         const user = await User.findById(req.user.id).select('-password'); // req.user.id is from auth that verified the token
 
-        // Instantiate of User model
+        // Instantiate of Post model
         const newPost = new Post({
             user: req.user.id,
             name: user.name,
@@ -39,5 +39,71 @@ router.post('/', [ auth, [
         res.status(500).send('Server Error');
     }
 });
+
+
+// @route    Get api/posts
+// @desc     Get all posts
+// @access   Private
+router.get('/', auth, async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ date: -1 }); // sort by date which will do the most recent/updated post
+        res.json(posts);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');    
+    }
+})
+
+
+// @route    Get api/posts/:id
+// @desc     Get post by user id
+// @access   Private
+router.get('/:id', auth, async (req, res) => {
+    try {
+
+        const post = await Post.findById(req.params.id); 
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+
+        res.json(post);
+    } catch (error) {
+        console.error(error.message);
+        if(error.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.status(500).send('Server Error');    
+    }
+})
+
+
+// @route    DELETE api/posts/:id
+// @desc     Delete post by user id
+// @access   Private
+router.delete('/:id', auth, async (req, res) => {
+    try {
+
+        const post = await Post.findById(req.params.id); 
+        
+        if (!post) {
+            return res.status(401).json({ msg: 'Unauthorized user' });
+        }
+
+        // Check user
+        if (post.user.toString() !== req.user.id) { // if you don't put toString() method it will never match if it's the right user
+            return res.status(401).json({ msg: 'Unauthorized user' });
+        }
+        await post.remove();
+        res.json({ msg: 'Post deleted' });
+
+    } catch (error) {
+        console.error(error.message);
+        if(error.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.status(500).send('Server Error');    
+    }
+});
+
 
 module.exports = router;
