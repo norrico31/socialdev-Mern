@@ -212,10 +212,10 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
         }
 
         // Get remove index
-        const removeIndex = post.comments.map(({ user }) => user.toString()).indexOf(req.user.id);
-        post.comments.splice(removeIndex, 1);
+        // const removeIndex = post.comments.map(({ user }) => user.toString()).indexOf(req.user.id);
+        // post.comments.splice(removeIndex, 1);
         // OR use filter
-        // post.comments = post.comments.filer(({ id }) => id !== req.params.comment_id);
+        post.comments = post.comments.filter(({ id }) => id !== req.params.comment_id);
         
         await post.save();
         return res.json(post.posts);
