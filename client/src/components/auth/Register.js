@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -11,12 +13,37 @@ const Register = () => {
     // Destructure from useState
     const { name, email, password, password2 } = formData;
 
-    const onSubmitHandle = (e) => {
+    const onSubmitHandle = async (e) => {
         e.preventDefault();
         if(password !== password2) {
            console.log('Passwords do not match');
         } else {
-            console.log(formData);
+
+            // // New object
+            // const newUser = {
+            //     name: name,
+            //     email: email,
+            //     password: password
+            // };
+
+            // try {
+            //     // config object that has a header type
+            //     const config = {
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     }
+
+            //     // To make the object string
+            //     const body = JSON.stringify(newUser);
+
+                
+            //     const res = await axios.post('/api/users', body, config); // 2nd parameter is data or body, 3rd is the config which has the headers of Content-Type
+            //     console.log(res.data);
+
+            // } catch (error) {
+            //     console.error(error.message);
+            // }
         }
     }
 
@@ -26,8 +53,7 @@ const Register = () => {
 
     return (
         <Fragment>
-            <h1 className="large text-primary">Sign Up
-            </h1>
+            <h1 className="large text-primary">Sign Up</h1>
             <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
             <form onSubmit={(e) => onSubmitHandle(e) } className="form">
 
@@ -50,7 +76,7 @@ const Register = () => {
                 
                 <input type="submit" value="Register" className="btn btn-primary" />
             </form>
-            <p className="my-1">Already have an account? <a href="login.html">Sign In</a></p>
+            <p className="my-1">Already have an account? <Link to="/login">Sign In</Link></p>
         </Fragment>
     )
 }
