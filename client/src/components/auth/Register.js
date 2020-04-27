@@ -1,8 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types'
 
-const Register = () => {
+
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+
+const Register = ({ setAlert }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -16,7 +21,7 @@ const Register = () => {
     const onSubmitHandle = async (e) => {
         e.preventDefault();
         if(password !== password2) {
-           console.log('Passwords do not match');
+           setAlert('Passwords do not match', 'danger');
         } else {
 
             // // New object
@@ -81,4 +86,15 @@ const Register = () => {
     )
 }
 
-export default Register
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired
+};
+
+export default connect(null, { setAlert })(Register);
+
+
+// connect is takes 2 things. 
+// first is the state that you want to map
+// second is going to be an object with any actions you want to use
+// sample props.setAlert. props is parameter on Register
+// props is now destructure using setAlert in Register parameter
