@@ -6,8 +6,9 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,32 +24,7 @@ const Register = ({ setAlert }) => {
         if(password !== password2) {
            setAlert('Passwords do not match', 'danger');
         } else {
-
-            // // New object
-            // const newUser = {
-            //     name: name,
-            //     email: email,
-            //     password: password
-            // };
-
-            // try {
-            //     // config object that has a header type
-            //     const config = {
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         }
-            //     }
-
-            //     // To make the object string
-            //     const body = JSON.stringify(newUser);
-
-                
-            //     const res = await axios.post('/api/users', body, config); // 2nd parameter is data or body, 3rd is the config which has the headers of Content-Type
-            //     console.log(res.data);
-
-            // } catch (error) {
-            //     console.error(error.message);
-            // }
+            register({ name, email, password });
         }
     }
 
@@ -63,11 +39,11 @@ const Register = ({ setAlert }) => {
             <form onSubmit={(e) => onSubmitHandle(e) } className="form">
 
                 <div className="form-group">
-                <input type="text" placeholder="Name" name="name" required value={ name } onChange={(e) => onChangeForm(e)} />
+                <input type="text" placeholder="Name" name="name"  value={ name } onChange={(e) => onChangeForm(e)} />
                 </div>
 
                 <div className="form-group">
-                <input type="email" placeholder="Email Address" name="email" required value={ email } onChange={(e) => onChangeForm(e)}/>
+                <input type="email" placeholder="Email Address" name="email" value={ email } onChange={(e) => onChangeForm(e)}/>
                 <small className="form-text">This site uses Gravatar, so if you want a profile image, use a Gravatar email</small>
                 </div>
 
@@ -87,10 +63,11 @@ const Register = ({ setAlert }) => {
 }
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
 
 
 // connect is takes 2 things. 
