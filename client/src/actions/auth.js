@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL } from './types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
 
 import { setAuthToken } from '../utils/setAuthToken';
 
 // Load User
-export const loadUser = () => async dispatch => {
+export const loadUser = () => async (dispatch) => {
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
@@ -26,7 +26,7 @@ export const loadUser = () => async dispatch => {
 
 
 // Register user
-export const register = ({ name, email, password })  => async dispatch => {
+export const register = ({ name, email, password })  => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ export const register = ({ name, email, password })  => async dispatch => {
 
 
 // Login user
-export const login = (email, password)  => async dispatch => {
+export const login = (email, password)  => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -85,3 +85,11 @@ export const login = (email, password)  => async dispatch => {
         });
     }
 }
+
+
+// Logout / Clear Profile
+export const logout = () => async (dispatch) =>{
+    dispatch({
+        type: LOGOUT
+    });
+};
