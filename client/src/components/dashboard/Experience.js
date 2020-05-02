@@ -10,13 +10,13 @@ const Experience = ({ experience, deleteExperience }) => {
 
     const experiences = experience.map((exp) => (
         <tr key={exp._id}>
-        <td>{exp.company}</td>
-        <td className="hide-sm">{exp.title}</td>
-        <td><Moment format="YYYY/MM/DD">{moment.utc(exp.from)}</Moment> - {' '}{exp.to === null ? (' Now') : (<Moment format="YYYY/MM/DD">{moment.utc(exp.to)}</Moment>)}
-        </td>
-        <td>
-            <button className="btn btn-danger" onClick={() => deleteExperience(exp._id)}>Delete</button>
-        </td>
+            <td>{exp.company}</td>
+            <td className="hide-sm">{exp.title}</td>
+            <td><Moment format="YYYY/MM/DD">{moment.utc(exp.from)}</Moment> - {' '}{exp.to === null ? (' Now') : (<Moment format="YYYY/MM/DD">{moment.utc(exp.to)}</Moment>)}
+            </td>
+            <td>
+                <button className="btn btn-danger" onClick={() => deleteExperience(exp._id)}>Delete</button>
+            </td>
         </tr>
     ))
 
