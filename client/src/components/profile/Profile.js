@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { getProfileById } from '../../actions/profile';
 
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
+
 import Spinner from '../layout/Spinner';
 
 const Profile = ({ match, getProfileById, profile: { profile, loading }, auth }) => {
@@ -15,7 +18,11 @@ const Profile = ({ match, getProfileById, profile: { profile, loading }, auth })
         <Fragment>
             {profile === null || loading ? <Spinner /> : <Fragment>
                     <Link to="/profiles" className="btn btn-light"><i class="fas fa-chevron-left"></i> Profile</Link>
-                    {auth.isAuthenticated && auth.loading === false && auth.user._id === profile.user._id && (<Link to="/edit-profile" className="btn btn-dark">Edit Profile</Link>)}
+                    {auth.isAuthenticated && auth.loading === false && auth.user.id === profile.user.id && (<Link to="/edit-profile" className="btn btn-dark">Edit Profile</Link>)}
+                    <div className="profile-grid my-1">
+                        <ProfileTop profile={profile} />
+                        <ProfileAbout profile={profile}/>
+                    </div>
                 </Fragment>}
         </Fragment>
     )
