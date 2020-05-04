@@ -9,7 +9,7 @@ import Spinner from '../layout/Spinner';
 const Profile = ({ match, getProfileById, profile: { profile, loading }, auth }) => {
     useEffect(() => {
         getProfileById(match.params.id);
-    }, [getProfileById])
+    }, [getProfileById, match.params.id])
 
     return (
         <Fragment>
