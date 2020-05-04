@@ -3,7 +3,7 @@ import { setAlert } from './alert';
 import { GET_POSTS, POST_ERROR } from './types';
 
 // Get posts
-export const getPosts =  () => async (dispatch) => {
+export const getPosts = () => async (dispatch) => {
     try {
         const res = await axios.get('/api/posts');
         dispatch({

@@ -7,7 +7,7 @@ const initialState = {
     error: {}
 }
 
-export default (state= initialState, action) => {
+export default (state = initialState, action) => {
 
     const { type, payload } = action;
 
