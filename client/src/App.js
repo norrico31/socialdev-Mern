@@ -20,6 +20,8 @@ import Profile from './components/profile/Profile';
 
 import Posts from './components/posts/Posts';
 
+import Post from './components/post/Post';
+
 import { loadUser } from './actions/auth';
 import { setAuthToken } from './utils/setAuthToken';
 
@@ -44,7 +46,7 @@ const App = () => {
         <Router>
             <Fragment>
                 <Navbar />
-                <Route exact path="/" component ={ Landing } / >
+                <Route exact path="/" component ={ Landing } />
                     <div className="container">
                         <Alert />
                         <Switch>
@@ -58,6 +60,7 @@ const App = () => {
                             <PrivateRoute exact path="/add-experience" component={ AddExperience } />
                             <PrivateRoute exact path="/add-education" component={ AddEducation } />
                             <PrivateRoute exact path="/posts" component={ Posts } />
+                            <PrivateRoute exact path="/post/:id" component={ Post } />{/* to get the /:id from the url use match method in the component you want to use */}
                         </Switch>
                     </div>
             </Fragment>
