@@ -55,7 +55,7 @@ router.post('/', [
                 id: user.id   // user.id is from User model
             }
         }
-        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000000 }, (err, token) => {  // 3rd parameter is callback function to get the token
+        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 3600 }, (err, token) => {  // 3rd parameter is callback function to get the token
             if(err) throw err;
             res.json({ token })  // send the jwt token to json
         });
