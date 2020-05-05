@@ -10,14 +10,18 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+<<<<<<< HEAD
   "engines": {
-    "node": "13.12.x"
+    "node": "12.16.2"
   },
+=======
+>>>>>>> parent of 9ff6247... added engines script just to try out
   "author": "Norrico Gerald Biason",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "gravatar": "^1.8.0",
