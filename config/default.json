@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://norrico31:12345@mongoose-express-lhkys.mongodb.net/test?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://norrico31:norrico31@mongoose-express-lhkys.mongodb.net/test?retryWrites=true&w=majority",
     "jwtSecret": "youcansetthiswhateveryouwant",
     "githubClientID": "6feee969cb6dd72c57f2",
     "githubSecret": "1eac8652f4de46e5e129411a72fc6681fea5c271"

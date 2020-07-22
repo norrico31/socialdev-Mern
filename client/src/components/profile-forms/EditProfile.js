@@ -41,7 +41,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
             linkedin: loading || !profile.social ? '' : profile.social.linkedin,
             youtube: loading || !profile.social ? '' : profile.social.youtube,
         })
-    }, [loading, getCurrentProfile])
+    }, [loading, profile, getCurrentProfile])
 
     const {
         company,
